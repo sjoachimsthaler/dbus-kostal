@@ -11,6 +11,8 @@ print(test)
 meter_data = xmltodict.parse(test)
 print(meter_data)
 
+print (meter_data['root']['Device']['@Serial'])
+
 import json
 
 with open('test.json', 'w') as file:
