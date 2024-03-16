@@ -147,12 +147,12 @@ class DbusKostalService:
     meter_data = self._getKostalData()  
     
 
-    if not meter_data['mac']:
+    if not meter_data['root']['device']['@Serial']:
 
         raise ValueError("Response does not contain 'mac' attribute")
     
 
-    serial = meter_data['mac']
+    serial = meter_data['root']['device']['@Serial']
     return serial
  
  
