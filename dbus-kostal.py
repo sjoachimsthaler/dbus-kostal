@@ -276,17 +276,17 @@ class DbusKostalService:
 
       #self._dbusservice['/Ac/Power'] = meter_data['total_power']
 
-      if (config['Phase'] == '1'):
+      if (config['DEFAULT']['Phase'] == '1'):
         self._dbusservice['/Ac/L1/Voltage'] = meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value']
         self._dbusservice['/Ac/L1/Current'] = meter_data['root']['Device']['Measurements']['Measurement'][1]['@Value']
         self._dbusservice['/Ac/L1/Power'] = meter_data['root']['Device']['Measurements']['Measurement'][2]['@Value']
 
-      if (config['Phase'] == '2'):
+      if (config['DEFAULT']['Phase'] == '2'):
         self._dbusservice['/Ac/L2/Voltage'] = meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value']
         self._dbusservice['/Ac/L2/Current'] = meter_data['root']['Device']['Measurements']['Measurement'][1]['@Value']
         self._dbusservice['/Ac/L2/Power'] = meter_data['root']['Device']['Measurements']['Measurement'][2]['@Value']
 
-      if (config['Phase'] == '3'):
+      if (config['DEFAULT']['Phase'] == '3'):
         self._dbusservice['/Ac/L3/Voltage'] = meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value']
         self._dbusservice['/Ac/L3/Current'] = meter_data['root']['Device']['Measurements']['Measurement'][1]['@Value']
         self._dbusservice['/Ac/L3/Power'] = meter_data['root']['Device']['Measurements']['Measurement'][2]['@Value']
