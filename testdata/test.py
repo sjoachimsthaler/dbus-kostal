@@ -13,6 +13,11 @@ print(meter_data)
 
 print (meter_data['root']['Device']['@Serial'])
 
+voltage = meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value']
+parsed_voltage = float(voltage) 
+print(parsed_voltage)
+print(meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value'])
+
 import json
 
 with open('test.json', 'w') as file:
