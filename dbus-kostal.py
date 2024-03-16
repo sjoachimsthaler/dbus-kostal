@@ -278,8 +278,18 @@ class DbusKostalService:
 
       if (config['DEFAULT']['Phase'] == '1'):
         self._dbusservice['/Ac/L1/Voltage'] = round(float(meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value']))
-        self._dbusservice['/Ac/L1/Current'] = round(float(meter_data['root']['Device']['Measurements']['Measurement'][1]['@Value']))
-        self._dbusservice['/Ac/L1/Power'] = round(float(meter_data['root']['Device']['Measurements']['Measurement'][2]['@Value']))
+
+        x = meter_data['root']['Device']['Measurements']['Measurement'][1]
+        current = 0
+        if "@Value" in x:
+            current = x['@Value']
+        self._dbusservice['/Ac/L1/Current'] = round(float(current))
+
+        x = meter_data['root']['Device']['Measurements']['Measurement'][2]
+        current = 0
+        if "@Value" in x:
+            current = x['@Value']
+        self._dbusservice['/Ac/L1/Power'] = round(float(current))
 
       if (config['DEFAULT']['Phase'] == '2'):
         self._dbusservice['/Ac/L2/Voltage'] = meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value']
