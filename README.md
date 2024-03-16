@@ -13,6 +13,7 @@ This project is my first on GitHub and with the Victron Venus OS, so I took some
 - https://github.com/victronenergy/dbus-smappee
 - https://github.com/Louisvdw/dbus-serialbattery
 - https://community.victronenergy.com/idea/114716/power-meter-lib-for-modbus-rtu-based-meters-from-a.html - [Old Thread](https://community.victronenergy.com/questions/85564/eastron-sdm630-modbus-energy-meter-community-editi.html)
+- https://github.com/fabian-lauer/dbus-shelly-3em-smartmeter/blob/main/README.md
 
 ## How it works
 ### My setup
@@ -20,18 +21,16 @@ This project is my first on GitHub and with the Victron Venus OS, so I took some
   - 3-Phase installation (normal for Germany)
   - Connected to Wifi network "A"
   - IP 192.168.2.13/24  
-- Victron Energy Cerbo GX with Venus OS - Firmware v2.93
-  - No other devices from Victron connected (still waiting for shipment of Multiplus-2)
+- Victron Energy Multiplus II GX with Venus OS - Firmware v3.22
   - Connected to Wifi network "A"
-  - IP 192.168.2.20/24
+  - IP 192.168.10.20/24
 
 ### Details / Process
 As mentioned above the script is inspired by @RalfZim fronius smartmeter implementation.
 So what is the script doing:
 - Running as a service
 - connecting to DBus of the Venus OS `com.victronenergy.grid.http_40` or `com.victronenergy.pvinverter.http_40`
-- After successful DBus connection Shelly 3EM is accessed via REST-API - simply the /status is called and a JSON is returned with all details
-  A sample JSON file from Shelly 3EM can be found [here](docs/shelly3em-status-sample.json)
+- After successful DBus connection Kostal PV Inverter is accessed via REST-API - simply the /status is called and a JSON is returned with all details
 - Serial/MAC is taken from the response as device serial
 - Paths are added to the DBus with default value 0 - including some settings like name, etc
 - After that a "loop" is started which pulls Shelly 3EM data every 750ms from the REST-API and updates the values in the DBus
@@ -49,22 +48,22 @@ Thats it 😄
 
 ## Install & Configuration
 ### Get the code
-Just grap a copy of the main branche and copy them to `/data/dbus-shelly-3em-smartmeter`.
+Just grap a copy of the main branche and copy them to `/data/dbus-kostal`.
 After that call the install.sh script.
 
 The following script should do everything for you:
 ```
-wget https://github.com/fabian-lauer/dbus-shelly-3em-smartmeter/archive/refs/heads/main.zip
-unzip main.zip "dbus-shelly-3em-smartmeter-main/*" -d /data
-mv /data/dbus-shelly-3em-smartmeter-main /data/dbus-shelly-3em-smartmeter
-chmod a+x /data/dbus-shelly-3em-smartmeter/install.sh
-/data/dbus-shelly-3em-smartmeter/install.sh
+wget https://github.com/sjoachimsthaler/dbus-kostal/archive/refs/heads/main.zip
+unzip main.zip "dbus-kostal-main/*" -d /data
+mv /data/dbus-kostal-main /data/dbus-kostal
+chmod a+x /data/dbus-kostal/install.sh
+/data/dbus-kostal/install.sh
 rm main.zip
 ```
 ⚠️ Check configuration after that - because service is already installed an running and with wrong connection data (host, username, pwd) you will spam the log-file
 
 ### Change config.ini
-Within the project there is a file `/data/dbus-shelly-3em-smartmeter/config.ini` - just change the values - most important is the host, username and password in section "ONPREMISE". More details below:
+Within the project there is a file `/data/dbus-kostal/config.ini` - just change the values - most important is the host, username and password in section "ONPREMISE". More details below:
 
 | Section  | Config vlaue | Explanation |
 | ------------- | ------------- | ------------- |
