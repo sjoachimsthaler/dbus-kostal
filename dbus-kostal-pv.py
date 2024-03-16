@@ -39,7 +39,7 @@ from vedbus import VeDbusService
 
 
 class DbusKostalService:
-  def __init__(self, paths, productname='Kostal PV', connection='Kostal Xml sXmlce'):
+  def __init__(self, paths, productname='Kostal PV', connection='Kostal Xml XmlService'):
 
     config = self._getConfig()
 
@@ -111,7 +111,7 @@ class DbusKostalService:
 
     self._dbusservice.add_path('/Role', role)
 
-    self._dbusservice.add_path('/Position', self._getShellyPosition()) # normaly only needed for pvinverter
+    self._dbusservice.add_path('/Position', self._getKostalPosition()) # normaly only needed for pvinverter
 
     self._dbusservice.add_path('/Serial', self._getShellySerial())
 
@@ -144,7 +144,7 @@ class DbusKostalService:
 
   def _getShellySerial(self):
 
-    meter_data = self._getShellyData()  
+    meter_data = self._getKostalData()  
     
 
     if not meter_data['mac']:
@@ -182,7 +182,7 @@ class DbusKostalService:
  
  
 
-  def _getShellyPosition(self):
+  def _getKostalPosition(self):
 
     config = self._getConfig()
 
@@ -197,7 +197,7 @@ class DbusKostalService:
  
  
 
-  def _getShellyStatusUrl(self):
+  def _getKostalStatusUrl(self):
 
     config = self._getConfig()
 
@@ -206,7 +206,7 @@ class DbusKostalService:
 
     if accessType == 'OnPremise': 
 
-        URL = "http://%s:%s@%s/status" % (config['ONPREMISE']['Username'], config['ONPREMISE']['Password'], config['ONPREMISE']['Host'])
+        URL = "http://%s/measurements.xml" % (config['ONPREMISE']['Host'])
 
         URL = URL.replace(":@", "")
 
@@ -219,9 +219,9 @@ class DbusKostalService:
     
  
 
-  def _getShellyData(self):
+  def _getKostalData(self):
 
-    URL = self._getShellyStatusUrl()
+    URL = self._getKostalStatusUrl()
 
     meter_r = requests.get(url = URL, timeout=5)
     
@@ -230,17 +230,19 @@ class DbusKostalService:
 
     if not meter_r:
 
-        raise ConnectionError("No response from Shelly 3EM - %s" % (URL))
+        raise ConnectionError("No response from Kostal - %s" % (URL))
     
+    import xmltodict
 
-    meter_data = meter_r.json()     
+    meter_data = xmltodict.parse(meter_r.text)
+    #meter_data = meter_r.json()     
     
 
     # check for Json
 
     if not meter_data:
 
-        raise ValueError("Converting response to JSON failed")
+        raise ValueError("Converting response to Xml failed")
     
     
     return meter_data
@@ -264,64 +266,63 @@ class DbusKostalService:
 
     try:
 
-      #get data from Shelly 3em
+      #get data from Kostal
 
-      meter_data = self._getShellyData()
+      meter_data = self._getKostalData()
 
       config = self._getConfig()
-
-
-      try:
-
-        remapL1 = int(config['ONPREMISE']['L1Position'])
-
-      except KeyError:
-
-        remapL1 = 1
-
-
-      if remapL1 > 1:
-
-        old_l1 = meter_data['emeters'][0]
-
-        meter_data['emeters'][0] = meter_data['emeters'][remapL1-1]
-
-        meter_data['emeters'][remapL1-1] = old_l1
        
 
       #send data to DBus
 
-      self._dbusservice['/Ac/Power'] = meter_data['total_power']
+      #self._dbusservice['/Ac/Power'] = meter_data['total_power']
 
-      self._dbusservice['/Ac/L1/Voltage'] = meter_data['emeters'][0]['voltage']
+      if (config['Phase'] == '1'):
+        self._dbusservice['/Ac/L1/Voltage'] = meter_data['root']['device']['Measurements']['Measurement'][0]['@Value']
+        self._dbusservice['/Ac/L1/Current'] = meter_data['root']['device']['Measurements']['Measurement'][1]['@Value']
+        self._dbusservice['/Ac/L1/Power'] = meter_data['root']['device']['Measurements']['Measurement'][2]['@Value']
 
-      self._dbusservice['/Ac/L2/Voltage'] = meter_data['emeters'][1]['voltage']
+      if (config['Phase'] == '2'):
+        self._dbusservice['/Ac/L2/Voltage'] = meter_data['root']['device']['Measurements']['Measurement'][0]['@Value']
+        self._dbusservice['/Ac/L2/Current'] = meter_data['root']['device']['Measurements']['Measurement'][1]['@Value']
+        self._dbusservice['/Ac/L2/Power'] = meter_data['root']['device']['Measurements']['Measurement'][2]['@Value']
 
-      self._dbusservice['/Ac/L3/Voltage'] = meter_data['emeters'][2]['voltage']
+      if (config['Phase'] == '3'):
+        self._dbusservice['/Ac/L3/Voltage'] = meter_data['root']['device']['Measurements']['Measurement'][0]['@Value']
+        self._dbusservice['/Ac/L3/Current'] = meter_data['root']['device']['Measurements']['Measurement'][1]['@Value']
+        self._dbusservice['/Ac/L3/Power'] = meter_data['root']['device']['Measurements']['Measurement'][2]['@Value']
 
-      self._dbusservice['/Ac/L1/Current'] = meter_data['emeters'][0]['current']
+      
 
-      self._dbusservice['/Ac/L2/Current'] = meter_data['emeters'][1]['current']
+      # self._dbusservice['/Ac/L1/Voltage'] = meter_data['emeters'][0]['voltage']
 
-      self._dbusservice['/Ac/L3/Current'] = meter_data['emeters'][2]['current']
+      # self._dbusservice['/Ac/L2/Voltage'] = meter_data['emeters'][1]['voltage']
 
-      self._dbusservice['/Ac/L1/Power'] = meter_data['emeters'][0]['power']
+      # self._dbusservice['/Ac/L3/Voltage'] = meter_data['emeters'][2]['voltage']
 
-      self._dbusservice['/Ac/L2/Power'] = meter_data['emeters'][1]['power']
+      # self._dbusservice['/Ac/L1/Current'] = meter_data['emeters'][0]['current']
 
-      self._dbusservice['/Ac/L3/Power'] = meter_data['emeters'][2]['power']
+      # self._dbusservice['/Ac/L2/Current'] = meter_data['emeters'][1]['current']
 
-      self._dbusservice['/Ac/L1/Energy/Forward'] = (meter_data['emeters'][0]['total']/1000)
+      # self._dbusservice['/Ac/L3/Current'] = meter_data['emeters'][2]['current']
 
-      self._dbusservice['/Ac/L2/Energy/Forward'] = (meter_data['emeters'][1]['total']/1000)
+      # self._dbusservice['/Ac/L1/Power'] = meter_data['emeters'][0]['power']
 
-      self._dbusservice['/Ac/L3/Energy/Forward'] = (meter_data['emeters'][2]['total']/1000)
+      # self._dbusservice['/Ac/L2/Power'] = meter_data['emeters'][1]['power']
 
-      self._dbusservice['/Ac/L1/Energy/Reverse'] = (meter_data['emeters'][0]['total_returned']/1000) 
+      # self._dbusservice['/Ac/L3/Power'] = meter_data['emeters'][2]['power']
 
-      self._dbusservice['/Ac/L2/Energy/Reverse'] = (meter_data['emeters'][1]['total_returned']/1000) 
+      # self._dbusservice['/Ac/L1/Energy/Forward'] = (meter_data['emeters'][0]['total']/1000)
 
-      self._dbusservice['/Ac/L3/Energy/Reverse'] = (meter_data['emeters'][2]['total_returned']/1000) 
+      # self._dbusservice['/Ac/L2/Energy/Forward'] = (meter_data['emeters'][1]['total']/1000)
+
+      # self._dbusservice['/Ac/L3/Energy/Forward'] = (meter_data['emeters'][2]['total']/1000)
+
+      # self._dbusservice['/Ac/L1/Energy/Reverse'] = (meter_data['emeters'][0]['total_returned']/1000) 
+
+      # self._dbusservice['/Ac/L2/Energy/Reverse'] = (meter_data['emeters'][1]['total_returned']/1000) 
+
+      # self._dbusservice['/Ac/L3/Energy/Reverse'] = (meter_data['emeters'][2]['total_returned']/1000) 
       
 
       # Old version
@@ -335,25 +336,25 @@ class DbusKostalService:
 
       #Calc = 60min * 60 sec / 0.500 (refresh interval of 500ms) * 1000
 
-      if (self._dbusservice['/Ac/Power'] > 0):
+      # if (self._dbusservice['/Ac/Power'] > 0):
 
-           self._dbusservice['/Ac/Energy/Forward'] = self._dbusservice['/Ac/Energy/Forward'] + (self._dbusservice['/Ac/Power']/(60*60/0.5*1000))            
+      #      self._dbusservice['/Ac/Energy/Forward'] = self._dbusservice['/Ac/Energy/Forward'] + (self._dbusservice['/Ac/Power']/(60*60/0.5*1000))            
 
-      if (self._dbusservice['/Ac/Power'] < 0):
+      # if (self._dbusservice['/Ac/Power'] < 0):
 
-           self._dbusservice['/Ac/Energy/Reverse'] = self._dbusservice['/Ac/Energy/Reverse'] + (self._dbusservice['/Ac/Power']*-1/(60*60/0.5*1000))
+      #      self._dbusservice['/Ac/Energy/Reverse'] = self._dbusservice['/Ac/Energy/Reverse'] + (self._dbusservice['/Ac/Power']*-1/(60*60/0.5*1000))
 
       
 
       #logging
 
-      logging.debug("House Consumption (/Ac/Power): %s" % (self._dbusservice['/Ac/Power']))
+      # logging.debug("House Consumption (/Ac/Power): %s" % (self._dbusservice['/Ac/Power']))
 
-      logging.debug("House Forward (/Ac/Energy/Forward): %s" % (self._dbusservice['/Ac/Energy/Forward']))
+      # logging.debug("House Forward (/Ac/Energy/Forward): %s" % (self._dbusservice['/Ac/Energy/Forward']))
 
-      logging.debug("House Reverse (/Ac/Energy/Revers): %s" % (self._dbusservice['/Ac/Energy/Reverse']))
+      # logging.debug("House Reverse (/Ac/Energy/Revers): %s" % (self._dbusservice['/Ac/Energy/Reverse']))
 
-      logging.debug("---");
+      # logging.debug("---");
       
 
       # increment UpdateIndex - to show that new data is available an wrap
@@ -367,15 +368,15 @@ class DbusKostalService:
 
     except (ValueError, requests.exceptions.ConnectionError, requests.exceptions.Timeout, ConnectionError) as e:
 
-       logging.critical('Error getting data from Shelly - check network or Shelly status. Setting power values to 0. Details: %s', e, exc_info=e)       
+       logging.critical('Error getting data from Kostal - check network or Kostal status. Setting power values to 0. Details: %s', e, exc_info=e)       
 
-       self._dbusservice['/Ac/L1/Power'] = 0                                       
+      #  self._dbusservice['/Ac/L1/Power'] = 0                                       
 
-       self._dbusservice['/Ac/L2/Power'] = 0                                       
+      #  self._dbusservice['/Ac/L2/Power'] = 0                                       
 
-       self._dbusservice['/Ac/L3/Power'] = 0
+      #  self._dbusservice['/Ac/L3/Power'] = 0
 
-       self._dbusservice['/Ac/Power'] = 0
+      #  self._dbusservice['/Ac/Power'] = 0
 
        self._dbusservice['/UpdateIndex'] = (self._dbusservice['/UpdateIndex'] + 1 ) % 256        
 
