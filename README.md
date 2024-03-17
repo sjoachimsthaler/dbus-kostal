@@ -1,9 +1,9 @@
-# dbus-shelly-3em-smartmeter
-Integrate Shelly 3EM smart meter into [Victron Energies Venus OS](https://github.com/victronenergy/venus)
+# dbus-kostal
+Integrate Kostal Piko MP Plus PV inverter into [Victron Energies Venus OS](https://github.com/victronenergy/venus)
 
 ## Purpose
-With the scripts in this repo it should be easy possible to install, uninstall, restart a service that connects the Shelly 3EM to the VenusOS and GX devices from Victron.
-Idea is pasend on @RalfZim project linked below.
+With the scripts in this repo it should be easy possible to install, uninstall, restart a service that connects the Kostal Piko MP Plus inverter to the VenusOS and GX devices from Victron.
+Idea is basend on @RalfZim project linked below.
 
 
 
@@ -29,19 +29,13 @@ This project is my first on GitHub and with the Victron Venus OS, so I took some
 As mentioned above the script is inspired by @RalfZim fronius smartmeter implementation.
 So what is the script doing:
 - Running as a service
-- connecting to DBus of the Venus OS `com.victronenergy.grid.http_40` or `com.victronenergy.pvinverter.http_40`
+- connecting to DBus of the Venus OS `com.victronenergy.pvinverter.http_40`
 - After successful DBus connection Kostal PV Inverter is accessed via REST-API - simply the /status is called and a JSON is returned with all details
 - Serial/MAC is taken from the response as device serial
 - Paths are added to the DBus with default value 0 - including some settings like name, etc
-- After that a "loop" is started which pulls Shelly 3EM data every 750ms from the REST-API and updates the values in the DBus
+- After that a "loop" is started which pulls Kostal Piko data every 750ms from the REST-API and updates the values in the DBus
 
 Thats it 😄
-
-### Pictures
-![Tile Overview](img/venus-os-tile-overview.PNG)
-![Remote Console - Overview](img/venus-os-remote-console-overview.PNG) 
-![SmartMeter - Values](img/venus-os-shelly3em-smartmeter.PNG)
-![SmartMeter - Device Details](img/venus-os-shelly3em-smartmeter-devicedetails.PNG)
 
 
 
@@ -80,11 +74,6 @@ Within the project there is a file `/data/dbus-kostal/config.ini` - just change 
 | ONPREMISE  | L1Position | Which input on the Shelly in 3-phase grid is supplying a single Multi |
 
 
-### Remapping L1
-In a 3-phase grid with a single Multi, Venus OS expects L1 to be supplying the only Multi. This is not always the case. If for example your Multi is supplied by L3 (Input `C` on the Shelly) your GX device will show AC Loads as consuming from both L1 and L3. Setting `L1Position` to the appropriate Shelly input allows for remapping the phases and showing correct data on the GX device.
-
-If your single Multi is connected to the Input `A` on the Shelly you don't need to change this setting. Setting `L1Position` to `2` would swap the `B` CT & Voltage sensors data on the Shelly with the `A` CT & Voltage sensors data on the Shelly. Respectively, setting `L1Position` to `3` would swap `A` and `C` inputs.
-
 ## Used documentation
 - https://github.com/victronenergy/venus/wiki/dbus#grid   DBus paths for Victron namespace GRID
 - https://github.com/victronenergy/venus/wiki/dbus#pv-inverters   DBus paths for Victron namespace PVINVERTER
@@ -92,5 +81,3 @@ If your single Multi is connected to the Input `A` on the Shelly you don't need 
 - https://www.victronenergy.com/live/ccgx:root_access   How to get root access on GX device/Venus OS
 
 ## Discussions on the web
-This module/repository has been posted on the following threads:
-- https://community.victronenergy.com/questions/125793/shelly-3em-smartmeter-with-venusos-cerbo-gx.html
