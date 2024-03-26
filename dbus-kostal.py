@@ -134,7 +134,7 @@ class DbusKostalService:
 
     # add _update function 'timer'
 
-    gobject.timeout_add(500, self._update) # pause 500ms before the next request
+    gobject.timeout_add(2500, self._update) # pause 500ms before the next request
     
 
     # add _signOfLife 'timer' to get feedback in log every 5minutes
@@ -216,15 +216,45 @@ class DbusKostalService:
     
 
     return URL
+
+  def _getKostalHistoricUrl(self):
+
+    config = self._getConfig()
+
+    accessType = config['DEFAULT']['AccessType']
+    
+
+    if accessType == 'OnPremise': 
+
+        URL = "http://%s/yields.json?total=1" % (config['ONPREMISE']['Host'])
+
+        URL = URL.replace(":@", "")
+
+    else:
+
+        raise ValueError("AccessType %s is not supported" % (config['DEFAULT']['AccessType']))
+    
+
+    return URL
     
  
+
+  def _getKostalHistoricData(self):
+    URL = self._getKostalHistoricUrl()
+
+    meter_r = requests.get(url = URL, timeout=5)
+
+    if not meter_r:
+
+        raise ConnectionError("No response from Kostal - %s" % (URL))
+
+    return json.loads(meter_r)
 
   def _getKostalData(self):
 
     URL = self._getKostalStatusUrl()
 
     meter_r = requests.get(url = URL, timeout=5)
-    
 
     # check for response
 
@@ -269,8 +299,16 @@ class DbusKostalService:
 
       meter_data = self._getKostalData()
 
+      historic_data = self._getKostalHistoricData()
+
       config = self._getConfig()
-       
+
+      energy = 0
+      # sum up all Wh values from yields.json datasets in produced 
+      for x in historic_data['TotalCurves']['Datasets'][0]['Data']:
+          energy += x['Data']
+
+      logging.debug("Energy: %s" % (energy))
 
       #send data to DBus
 
@@ -291,6 +329,7 @@ class DbusKostalService:
             power = x['@Value']
         self._dbusservice['/Ac/L1/Power'] = float(power)
         self._dbusservice['/Ac/Power'] = float(power)
+        self._dbusservice['/Ac/L1/Energy/Reverse'] = (energy/1000) 
 
       if (config['DEFAULT']['Phase'] == '2'):
         self._dbusservice['/Ac/L2/Voltage'] = float(meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value'])
@@ -307,6 +346,7 @@ class DbusKostalService:
             power = x['@Value']
         self._dbusservice['/Ac/L2/Power'] = float(power)
         self._dbusservice['/Ac/Power'] = float(power)
+        self._dbusservice['/Ac/L2/Energy/Reverse'] = (energy/1000) 
 
       if (config['DEFAULT']['Phase'] == '3'):
         self._dbusservice['/Ac/L3/Voltage'] = float(meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value'])
@@ -323,6 +363,7 @@ class DbusKostalService:
             power = x['@Value']
         self._dbusservice['/Ac/L3/Power'] = float(power)
         self._dbusservice['/Ac/Power'] = float(power)
+        self._dbusservice['/Ac/L3/Energy/Reverse'] = (energy/1000)
 
       
 

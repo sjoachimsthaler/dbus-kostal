@@ -2,7 +2,7 @@
 <Device Name="PIKO 4.6-2 MP plus" Type="Inverter" Platform="Net16" HmiPlatform="HMI17" NominalPower="4600" UserPowerLimit="nan" CountryPowerLimit="nan" Serial="763969EG006884230011" OEMSerial="10351317" BusAddress="1" NetBiosName="INV006884230011" WebPortal="PIKO Solar Portal" ManufacturerURL="kostal-solar-electric.com" IpAddress="192.168.10.118" DateTime="2024-03-16T16:24:56" MilliSeconds="839">
 <Measurements>
 <Measurement Value="231.5" Unit="V" Type="AC_Voltage"/>
-<Measurement Value="1.362" Unit="A" Type="AC_Current"/>
+<Measurement Unit="A" Type="AC_Current"/>
 <Measurement Value="308.8" Unit="W" Type="AC_Power"/>
 <Measurement Value="310.7" Unit="W" Type="AC_Power_fast"/>
 <Measurement Value="49.955" Unit="Hz" Type="AC_Frequency"/>

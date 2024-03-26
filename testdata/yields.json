@@ -1,0 +1,536 @@
+{
+    "TotalCurves": {
+        "ShowVirtualDatasets": true,
+        "Format": "YYYY",
+        "Unit": "Wh",
+        "IncrementUnit": "Y",
+        "IncrementStep": 10,
+        "Datasets": [
+            {
+                "Type": "Produced",
+                "Data": [
+                    {
+                        "Timestamp": "2000",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2001",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2002",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2003",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2004",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2005",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2006",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2007",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2008",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2009",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2010",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2011",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2012",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2013",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2014",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2015",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2016",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2017",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2018",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2019",
+                        "Data": 135829
+                    },
+                    {
+                        "Timestamp": "2020",
+                        "Data": 3476419
+                    },
+                    {
+                        "Timestamp": "2021",
+                        "Data": 3195148
+                    },
+                    {
+                        "Timestamp": "2022",
+                        "Data": 3391588
+                    },
+                    {
+                        "Timestamp": "2023",
+                        "Data": 3017349
+                    },
+                    {
+                        "Timestamp": "2024",
+                        "Data": 376257
+                    }
+                ]
+            },
+            {
+                "Type": "Consumed",
+                "Data": [
+                    {
+                        "Timestamp": "2000",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2001",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2002",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2003",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2004",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2005",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2006",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2007",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2008",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2009",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2010",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2011",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2012",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2013",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2014",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2015",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2016",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2017",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2018",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2019",
+                        "Data": 15255
+                    },
+                    {
+                        "Timestamp": "2020",
+                        "Data": 1170189
+                    },
+                    {
+                        "Timestamp": "2021",
+                        "Data": 1068085
+                    },
+                    {
+                        "Timestamp": "2022",
+                        "Data": 1210828
+                    },
+                    {
+                        "Timestamp": "2023",
+                        "Data": 1626234
+                    },
+                    {
+                        "Timestamp": "2024",
+                        "Data": 1203999
+                    }
+                ]
+            },
+            {
+                "Type": "Injected",
+                "Data": [
+                    {
+                        "Timestamp": "2000",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2001",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2002",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2003",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2004",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2005",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2006",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2007",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2008",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2009",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2010",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2011",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2012",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2013",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2014",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2015",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2016",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2017",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2018",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2019",
+                        "Data": 4032
+                    },
+                    {
+                        "Timestamp": "2020",
+                        "Data": 3134838
+                    },
+                    {
+                        "Timestamp": "2021",
+                        "Data": 2520880
+                    },
+                    {
+                        "Timestamp": "2022",
+                        "Data": 2331887
+                    },
+                    {
+                        "Timestamp": "2023",
+                        "Data": 1621936
+                    },
+                    {
+                        "Timestamp": "2024",
+                        "Data": 159387
+                    }
+                ]
+            },
+            {
+                "Type": "PV1",
+                "Data": [
+                    {
+                        "Timestamp": "2000",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2001",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2002",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2003",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2004",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2005",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2006",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2007",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2008",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2009",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2010",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2011",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2012",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2013",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2014",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2015",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2016",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2017",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2018",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2019",
+                        "Data": 121463
+                    },
+                    {
+                        "Timestamp": "2020",
+                        "Data": 2179543
+                    },
+                    {
+                        "Timestamp": "2021",
+                        "Data": 2034777
+                    },
+                    {
+                        "Timestamp": "2022",
+                        "Data": 2237891
+                    },
+                    {
+                        "Timestamp": "2023",
+                        "Data": 2005210
+                    },
+                    {
+                        "Timestamp": "2024",
+                        "Data": 293984
+                    }
+                ]
+            },
+            {
+                "Type": "PV2",
+                "Data": [
+                    {
+                        "Timestamp": "2000",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2001",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2002",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2003",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2004",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2005",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2006",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2007",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2008",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2009",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2010",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2011",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2012",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2013",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2014",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2015",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2016",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2017",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2018",
+                        "Data": 0
+                    },
+                    {
+                        "Timestamp": "2019",
+                        "Data": 30820
+                    },
+                    {
+                        "Timestamp": "2020",
+                        "Data": 1489028
+                    },
+                    {
+                        "Timestamp": "2021",
+                        "Data": 1348410
+                    },
+                    {
+                        "Timestamp": "2022",
+                        "Data": 1353018
+                    },
+                    {
+                        "Timestamp": "2023",
+                        "Data": 1201832
+                    },
+                    {
+                        "Timestamp": "2024",
+                        "Data": 111121
+                    }
+                ]
+            }
+        ]
+    }
+}
