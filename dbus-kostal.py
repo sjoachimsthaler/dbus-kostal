@@ -26,6 +26,7 @@ import sys
 import time
 
 import requests # for http GET
+import json # for json
 
 import configparser # for config/ini file
  
@@ -329,7 +330,7 @@ class DbusKostalService:
             power = x['@Value']
         self._dbusservice['/Ac/L1/Power'] = float(power)
         self._dbusservice['/Ac/Power'] = float(power)
-        self._dbusservice['/Ac/L1/Energy/Reverse'] = (energy/1000) 
+        self._dbusservice['/Ac/L1/Energy/Forward'] = (energy/1000) 
 
       if (config['DEFAULT']['Phase'] == '2'):
         self._dbusservice['/Ac/L2/Voltage'] = float(meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value'])
@@ -346,7 +347,7 @@ class DbusKostalService:
             power = x['@Value']
         self._dbusservice['/Ac/L2/Power'] = float(power)
         self._dbusservice['/Ac/Power'] = float(power)
-        self._dbusservice['/Ac/L2/Energy/Reverse'] = (energy/1000) 
+        self._dbusservice['/Ac/L2/Energy/Forward'] = (energy/1000) 
 
       if (config['DEFAULT']['Phase'] == '3'):
         self._dbusservice['/Ac/L3/Voltage'] = float(meter_data['root']['Device']['Measurements']['Measurement'][0]['@Value'])
@@ -363,7 +364,7 @@ class DbusKostalService:
             power = x['@Value']
         self._dbusservice['/Ac/L3/Power'] = float(power)
         self._dbusservice['/Ac/Power'] = float(power)
-        self._dbusservice['/Ac/L3/Energy/Reverse'] = (energy/1000)
+        self._dbusservice['/Ac/L3/Energy/Forward'] = (energy/1000)
 
       
 
