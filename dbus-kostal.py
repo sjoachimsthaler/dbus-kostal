@@ -248,7 +248,7 @@ class DbusKostalService:
 
         raise ConnectionError("No response from Kostal - %s" % (URL))
 
-    return json.loads(meter_r)
+    return json.loads(meter_r.text)
 
   def _getKostalData(self):
 
