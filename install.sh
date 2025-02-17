@@ -17,6 +17,7 @@ chmod 755 $SCRIPT_DIR/service/run
 # create sym-link to run script in deamon
 ln -s $SCRIPT_DIR/service /service/$DAEMON_NAME
 
+python3 -m pip install xmltodict
 
 
 # add install-script to rc.local to be ready for firmware update
