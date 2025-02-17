@@ -56,6 +56,12 @@ rm main.zip
 ```
 ⚠️ Check configuration after that - because service is already installed an running and with wrong connection data (host, username, pwd) you will spam the log-file
 
+
+Sometimes I get an error that xmltodict is not installed. It can be installed with the command
+```
+python3 -m pip install xmltodict
+```
+
 ### Change config.ini
 Within the project there is a file `/data/dbus-kostal/config.ini` - just change the values - most important is the host, username and password in section "ONPREMISE". More details below:
 
