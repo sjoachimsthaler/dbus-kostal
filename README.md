@@ -61,6 +61,11 @@ Sometimes I get an error that xmltodict is not installed. It can be installed wi
 ```
 python3 -m pip install xmltodict
 ```
+If Python is not installed
+```
+opkg update
+opkg install python3-pip
+```
 
 ### Change config.ini
 Within the project there is a file `/data/dbus-kostal/config.ini` - just change the values - most important is the host, username and password in section "ONPREMISE". More details below:
