@@ -27,6 +27,7 @@ import time
 
 import requests # for http GET
 import json # for json
+import xml.etree.ElementTree as ET # for xml
 
 import configparser # for config/ini file
  
@@ -263,10 +264,26 @@ class DbusKostalService:
 
         raise ConnectionError("No response from Kostal - %s" % (URL))
     
-    import xmltodict
+    try:
 
-    meter_data = xmltodict.parse(meter_r.text)
-    
+        xml_root = ET.fromstring(meter_r.text)
+
+    except ET.ParseError:
+
+        raise ValueError("Converting response to Xml failed")
+
+    # same structure as xmltodict produced: attributes get an '@' prefix,
+    # a single Measurement is still returned as a list
+    device = xml_root.find('Device')
+
+    meter_data = {'root': {'Device': {
+        **{'@' + k: v for k, v in device.attrib.items()},
+        'Measurements': {'Measurement': [
+            {'@' + k: v for k, v in m.attrib.items()}
+            for m in device.findall('Measurements/Measurement')
+        ]}
+    }}} if device is not None else None
+
 
     # check for Json
 
